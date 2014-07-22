@@ -1,10 +1,24 @@
-п»ї#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#include utils.ahk
 
+#include ChangeLayoutAndCopy.ahk
 
+#IfWinActive ahk_class TfrmMain ; BT2
+^c::  ;ctrl+c
+#IfWinActive ahk_class TPropertyInspector ; Delphi 7 property inspector window
+^c::  ;ctrl+c
+#IfWinActive ahk_class TEditWindow ;Delphi 7 Code Editor Window
+^c::  ;ctrl+c
+{
+    ;0x419 RU
+	changeLayoutAndCopy(0x419)
+Return
+}
+#IfWinActive ; let other scripts to work with all apps
+
+; Alt-Shift-B (Run or activate TheBat!)
 !+b::
 	if not WinExist( "ahk_class TMailerForm" )
 		run, "d:\Program Files\The Bat!\thebat.exe"
@@ -18,12 +32,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 		run, "D:\Program Files\Total Commander\TOTALCMD.EXE"
 	WinActivate
 Return
-	
+
+;win+c	
+;copy -> run or activate notepad++ -> open new file -> paste
 #c::
   ;Send, ^c
   ;Sleep, 100
-  Controlgetfocus, ctrl, A
-    PostMessage, % WM_COPY := 0x301,,,%ctrl%, A
+  SendWMCopyToCurrentControl()
   Sleep, 100
   Run, notepad++.exe
   WinWaitActive, ahk_class Notepad++
@@ -31,35 +46,18 @@ Return
   send, ^v
 return
 
-#IfWinActive ahk_class TfrmMain ; BT2
-^c::  ;ctrl+c
-#IfWinActive ahk_class TPropertyInspector ; Delphi 7 property inspector window
-^c::  ;ctrl+c
-#IfWinActive ahk_class TEditWindow ;Delphi Code Editor Window
-^c::  ;ctrl+c
-{
-    ;SetFormat, Integer, H
-    ;WinGet, WinID,, A
-    ;ThreadID:=DllCall("GetWindowThreadProcessId", "UInt", WinID, "UInt", 0)
-    ;InputLocaleID:=DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
-    ;SendMessage, 0x50,, 0x419,,A
-	;Controlgetfocus, ctrl, A
-    ;SendMessage, % WM_COPY := 0x301,,,%ctrl%, A
-	;SendMessage, 0x50,, %InputLocaleID%,,A
-	changeLayoutAndCopy(0x419)
-Return
-}
+
 #IfWinActive ahk_class TTOTAL_CMD
 {
 ^i::
   ;Send {NumpadMult}
   ;Send {F12}
   ;Send {NumpadMult}
-  PostMessage, 0x433, 3312,,, ahk_class TTOTAL_CMD ; РІС‹СЃР»Р°С‚СЊ РєРѕРјР°РЅРґСѓ cm_SelectFiles РѕРєРЅСѓ РўРЎ 
+  PostMessage, 0x433, 3312,,, ahk_class TTOTAL_CMD ; выслать команду cm_SelectFiles окну ТС 
   WinWaitActive, ahk_class TCOMBOINPUT
   send, *.sql{Enter}
   Sleep, 100
-; (0x433 - WM_USER+51, 2127 - wParam,,, ahk_class - РєР»Р°СЃСЃ РѕРєРЅР°) 
+; (0x433 - WM_USER+51, 2127 - wParam,,, ahk_class - класс окна) 
   ;Send {F12}
   ;cm_CopyFullNamesToClip 2018
   SendMessage, 0x433, 2018,,, ahk_class TTOTAL_CMD
@@ -76,12 +74,12 @@ Return
 {
 ^k::
   ;Send {NumpadMult}
-  PostMessage, 0x433, 3312,,, ahk_class TTOTAL_CMD ; РІС‹СЃР»Р°С‚СЊ РєРѕРјР°РЅРґСѓ cm_SelectFiles РѕРєРЅСѓ РўРЎ 
+  PostMessage, 0x433, 3312,,, ahk_class TTOTAL_CMD ; выслать команду cm_SelectFiles окну ТС 
   WinWaitActive, ahk_class TCOMBOINPUT
   send, *.sql
   send, {Enter}
   Sleep, 100
-; (0x433 - WM_USER+51, 2127 - wParam,,, ahk_class - РєР»Р°СЃСЃ РѕРєРЅР°) 
+; (0x433 - WM_USER+51, 2127 - wParam,,, ahk_class - класс окна) 
   ;Send {F12}
   ;cm_CopyFullNamesToClip 2018
   SendMessage, 0x433, 2018,,, ahk_class TTOTAL_CMD
@@ -95,5 +93,3 @@ Return
   return
 }
 #IfWinActive
-
-
