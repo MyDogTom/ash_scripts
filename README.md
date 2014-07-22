@@ -1,4 +1,12 @@
 ash_scripts
 ===========
 
-Ash scripts, than i use myself
+#About
+
+#Prerequisites
+
+#Usage
+
+#Scripts Description
+##ChangeLayoutAndCopy.ahk
+Resolve the problem when text after being copied and pasted become unreadable. 
