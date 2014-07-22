@@ -1,5 +1,3 @@
-ash_scripts
-===========
 About
 -----------
 A collection of `ahk` scripts that I use every day.
