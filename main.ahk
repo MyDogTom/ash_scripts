@@ -20,11 +20,11 @@ Return
 }
 #IfWinActive ; let other scripts to work with all apps
 
-;win+c	
 ;copy -> run or activate notepad++ -> open new file -> paste
-#c::
+#c:: ;win+c	
   SendWMCopyToCurrentControl()
-  Sleep, 100
+  ;Send, ^c
+  ;ClipWait
   Run, notepad++.exe
   WinWaitActive, ahk_class Notepad++
   send, ^n

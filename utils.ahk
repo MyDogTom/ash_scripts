@@ -7,7 +7,8 @@ GetCurrentKeyboardLayoutID(){
     SetFormat, Integer, H
     WinGet, WinID,, A
     ThreadID:=DllCall("GetWindowThreadProcessId", "UInt", WinID, "UInt", 0)
-    return DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
+    CurentLocalID := DllCall("GetKeyboardLayout", "UInt", ThreadID, "UInt")
+	return CurentLocalID
 }
 
 SetKeyboardLayoutID(KeyboardLayoutID){
