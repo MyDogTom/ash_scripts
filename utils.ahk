@@ -16,9 +16,12 @@ SetKeyboardLayoutID(KeyboardLayoutID){
 	Return
 }
 
-SendWMCopyToCurrentControl(){
-	Controlgetfocus, ctrl, A
-    SendMessage, % WM_COPY := 0x301,,,%ctrl%, A
+SendCtrlInsToCurrentControl(){
+	;Controlgetfocus, ctrl, A
+    ;SendMessage, % WM_COPY := 0x301,,,%ctrl%, A
+	Clipboard=
+	SendInput, ^{Ins}
+	ClipWait, 500
 	Return
 }
 

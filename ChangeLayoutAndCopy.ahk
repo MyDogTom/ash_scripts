@@ -9,7 +9,7 @@ changeLayoutAndCopy(KeyboardLayoutID){
 ;layoutid 0x419 for RU
     CurrentInputLocalID := GetCurrentKeyboardLayoutID()
     SetKeyboardLayoutID(KeyboardLayoutID)
-	SendWMCopyToCurrentControl()
+	SendCtrlInsToCurrentControl()
 	SetKeyboardLayoutID(CurrentInputLocalID)
 Return
 }
